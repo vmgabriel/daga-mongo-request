@@ -10,5 +10,22 @@ services:
       MONGO_INITDB_DATABASE: daga-iot
     volumes:
       - ./persistencyMongo:/data/db
+    networks:
+      - red
     ports:
-      - "27017:27017"
+      - "27017"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - red
+    ports:
+      - "7203:7203"
+    depends_on:
+      - "mongo"
+
+
+networks:
+  red:
