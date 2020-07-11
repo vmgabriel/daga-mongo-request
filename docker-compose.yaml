@@ -1,0 +1,14 @@
+version: "3.4"
+
+services:
+  mongo:
+    image: mongo:4.2.8-bionic
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_DATABASE: daga-iot
+    volumes:
+      - ./persistencyMongo:/data/db
+    ports:
+      - "27017:27017"
