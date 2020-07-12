@@ -23,6 +23,10 @@ class SensorDataValidate(Validate_Interface[SensorData]):
         temperature = data['temperature'] if ('temperature' in data) else None
         lightUV = data['lightUV'] if ('lightUV' in data) else None
         soilMoisture = data['soilMoisture'] if ('soilMoisture' in data) else None
+        idReader = data['idReader'] if ('idReader' in data) else None
+        nameReader = data['nameReader'] if ('nameReader' in data) else None
+        idController = data['idController'] if ('idController' in data) else None
+        nameController = data['nameController'] if ('nameController' in data) else None
         createdAt = data['createdAt'] if ('createdAt' in data) else None
         updatedAt = data['updatedAt'] if ('updatedAt' in data) else None
         deletedAt = data['deletedAt'] if ('deletedAt' in data) else None
@@ -41,6 +45,14 @@ class SensorDataValidate(Validate_Interface[SensorData]):
             return('lightUV not valid', {})
         if not (self.not_verify(soilMoisture)):
             return('soilMoisture not valid', {})
+        if not (self.not_verify(idReader)):
+            return('idReader not valid', {})
+        if not (self.not_verify(nameReader)):
+            return('nameReader not valid', {})
+        if not (self.not_verify(idController)):
+            return('idController not valid', {})
+        if not (self.not_verify(nameController)):
+            return('nameController not valid', {})
         if not (self.not_verify(createdAt)):
             return('created at not valid', {})
         if not (self.not_verify(updatedAt)):
@@ -55,6 +67,10 @@ class SensorDataValidate(Validate_Interface[SensorData]):
             temperature,
             lightUV,
             soilMoisture,
+            idReader,
+            nameReader,
+            idController,
+            nameController,
             createdAt,
             updatedAt,
             deletedAt
@@ -69,6 +85,10 @@ class SensorDataValidate(Validate_Interface[SensorData]):
         temperature = data['temperature'] if ('temperature' in data) else None
         lightUV = data['lightUV'] if ('lightUV' in data) else None
         soilMoisture = data['soilMoisture'] if ('soilMoisture' in data) else None
+        idReader = data['idReader'] if ('idReader' in data) else None
+        nameReader = data['nameReader'] if ('nameReader' in data) else None
+        idController = data['idController'] if ('idController' in data) else None
+        nameController = data['nameController'] if ('nameController' in data) else None
         createdAt = data['createdAt'] if ('createdAt' in data) else None
         updatedAt = data['updatedAt'] if ('updatedAt' in data) else None
         deletedAt = data['deletedAt'] if ('deletedAt' in data) else None
@@ -87,6 +107,14 @@ class SensorDataValidate(Validate_Interface[SensorData]):
             return('lightUV not valid', {})
         if not (self.not_verify(soilMoisture)):
             return('soilMoisture not valid', {})
+        if not (self.not_verify(idReader)):
+            return('idReader not valid', {})
+        if not (self.not_verify(nameReader)):
+            return('nameReader not valid', {})
+        if not (self.not_verify(idController)):
+            return('idController not valid', {})
+        if not (self.not_verify(nameController)):
+            return('nameController not valid', {})
         if not (self.not_verify(createdAt)):
             return('created at not valid', {})
         if not (self.not_verify(updatedAt)):
@@ -101,6 +129,10 @@ class SensorDataValidate(Validate_Interface[SensorData]):
             temperature,
             lightUV,
             soilMoisture,
+            idReader,
+            nameReader,
+            idController,
+            nameController,
             createdAt,
             updatedAt,
             deletedAt

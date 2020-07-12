@@ -43,7 +43,6 @@ class Database_SensorData(Database_Interface[SensorData]):
 
 
     def create(self, data: SensorData) -> SensorData:
-        print('Estoy Tratando de Guardar')
         return self.create_sensorData.execute(data)
 
 

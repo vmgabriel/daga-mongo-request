@@ -17,13 +17,18 @@ class SensorData:
     temperature: float
     lightUV: float
     soilMoisture: float
+    idReader: int
+    nameReader: str
+    idController: int
+    nameController: str
     createdAt: datetime
     updatedAt: datetime
     deletedAt: datetime
 
     def __str__(self):
         x = 'tookTime,gas,carbon,humedity,temperature,lightUV'
-        x += ',soilMoisture,createdAt,updatedAt'
+        x += ',soilMoisture,idReader,nameReader,idController'
+        x+= ',nameController,createdAt,updatedAt'
         return x
 
     def define_type(self, type_val):
@@ -43,8 +48,17 @@ class SensorData:
                 type_val == 'tookTime'
         ):
             return 'datetime'
-        if (type_val == 'id'):
+        if (
+                type_val == 'id' or
+                type_val == 'idReader' or
+                type_val == 'idController'
+        ):
             return 'int'
+        if (
+                type_val == 'nameReader' or
+                type_val == 'nameController'
+        ):
+            return 'str'
         return ''
 
     def id_name(self):
