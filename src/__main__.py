@@ -14,17 +14,21 @@ from config.server import configuration as conf
 
 # Connection
 from sensor_data.infraestructures.mongo.database_sensor_data import Database_SensorData
+from sensor_data_processed.infraestructures.mongo.database_sensor_data import Database_SensorData as DbSensorProcessed
 
 # Routes
 from protocols.http.v0.index import mod
 from sensor_data.infraestructures.http.v0 import SensorDataV0Http
+from sensor_data_processed.infraestructures.http.v0 import SensorDataV0Http as SensorProcessedV0Http
 
 persistency = conf['persistency']
 
 sensorData_service = Database_SensorData(persistency)
+sensorProcessedData_service = DbSensorProcessed(persistency)
 
 list_routes = [
-    SensorDataV0Http(sensorData_service)
+    SensorDataV0Http(sensorData_service),
+    SensorProcessedV0Http(sensorProcessedData_service)
 ]
 
 app = Flask(__name__)

@@ -8,13 +8,13 @@
 from typing import List, TypeVar, Generic, Any
 from sensor_data.domain.sensor_data import SensorData
 
-last_datas = {}
+list_data = {}
 filter_last_data_reader = lambda y: lambda x: x[1].idReader == y
 
 
 def is_created_controller(id_controller: str) -> bool:
     """Return True if SensorData have id_controller"""
-    return id_controller in last_datas
+    return id_controller in list_data
 
 
 def is_created_reader(id_controller: str, id_reader: str) -> bool:
@@ -22,7 +22,7 @@ def is_created_reader(id_controller: str, id_reader: str) -> bool:
     filtered = list(
         filter(
             filter_last_data_reader(id_reader),
-            enumerate(last_datas[id_controller])
+            enumerate(list_data[id_controller])
         )
     )
     return len(filtered) > 0
@@ -33,21 +33,21 @@ def find_and_delete_reader(id_controller: str, id_reader: str) -> None:
     filtered = list(
         filter(
             filter_last_data_reader(id_reader),
-            enumerate(last_datas[id_controller])
+            enumerate(list_data[id_controller])
         )
     )
-    del last_datas[id_controller][filtered[0][0]]
+    del list_data[id_controller][filtered[0][0]]
 
 
 def insert_reader(name_controller: str, data: SensorData) -> None:
     """With a name_controller insert to array data of SensorData"""
-    last_datas[name_controller].append(data)
+    list_data[name_controller].append(data)
 
 
 def verify_data(data: SensorData) -> None:
     """With data of SensorData select as last data and put"""
     if not (is_created_controller(data.idController)):
-        last_datas[data.idController] = []
+        list_data[data.idController] = []
     if (is_created_reader(data.idController, data.idReader)):
         find_and_delete_reader(data.idController, data.idReader)
     insert_reader(data.idController, data)
@@ -58,10 +58,15 @@ def verify_datas(datas: List[SensorData]) -> None:
     for data in datas:
         verify_data(data)
 
+
 def get_data_relation() -> List[SensorData]:
     """Get data relation valid"""
     data = []
-    for _, value in last_datas.items():
+    for _, value in list_data.items():
         data += value
     return data
 
+
+def remove_datas() -> None:
+    """Remove data"""
+    list_data = {}

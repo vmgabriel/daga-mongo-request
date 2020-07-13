@@ -8,8 +8,9 @@ from sensor_data.applications.validate import SensorDataValidate
 from sensor_data.domain.sensor_data import SensorData
 
 # Libraries
-from flask import Blueprint, jsonify, request
 import datetime
+from flask import Blueprint, jsonify, request
+from utils.middlewares.last_data_relation import verify_datas, get_data_relation
 
 class SensorDataV0Http(HttpProtocol):
     """Define Sensor Data Class for Use of HTTP, this extends HttpProtocol"""
@@ -36,6 +37,7 @@ class SensorDataV0Http(HttpProtocol):
                 return jsonify({ 'error': errors, 'code': 400 }), 400
 
             saved_sensorData = self.database_sensor.create(new_sensorData)
+            verify_datas(saved_sensorData)
 
             return jsonify({ 'message': 'Created Correcly', 'data': saved_sensorData.to_dict() }), 201
 
@@ -60,6 +62,7 @@ class SensorDataV0Http(HttpProtocol):
                         'message': 'Error saving sensor data in object {}'.format(line),
                         'error': message
                     }), 400
+            verify_datas(datas)
 
             (saved_sensorsDatas, count_sensors) = self.database_sensor.create_massive(datas)
 
