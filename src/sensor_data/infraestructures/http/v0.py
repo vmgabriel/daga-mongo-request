@@ -31,13 +31,11 @@ class SensorDataV0Http(HttpProtocol):
             data['createdAt'] = data['updatedAt'] = datetime.datetime.now()
 
             (errors, new_sensorData) = self.validate.validate_object(data)
-
-
             if not (errors == 'done correctly'):
                 return jsonify({ 'error': errors, 'code': 400 }), 400
 
             saved_sensorData = self.database_sensor.create(new_sensorData)
-            verify_datas(saved_sensorData)
+            verify_datas([saved_sensorData])
 
             return jsonify({ 'message': 'Created Correcly', 'data': saved_sensorData.to_dict() }), 201
 
