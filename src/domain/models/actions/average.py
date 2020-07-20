@@ -12,7 +12,7 @@ _T = TypeVar('T')
 class Average(ABC, Generic[_T]):
     """Average Abstract Class"""
     @abstractmethod
-    def execute(self, *datas) -> List[_T]:
+    def execute(self, *datas) -> _T:
         """Execute Process average"""
 
     @abstractmethod

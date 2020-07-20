@@ -75,7 +75,8 @@ class MeasureV0Http(HttpProtocol):
                     }), 400
 
             self.database_measure.put_odd_table(data.lower())
-            (saved_measure,count_measure) = self.database_measure.create_massive(datas)
+            (saved_measure,
+             count_measure) = self.database_measure.create_massive(datas)
 
             return jsonify({
                 'message': 'Created Massive Correcly',
