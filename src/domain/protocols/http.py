@@ -1,11 +1,14 @@
+"""Abstract Protocol for Valid Communication into HTTP"""
+
 # Develop Vmgabriel
 
 # Libraries
-from flask import Blueprint
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic
+from flask import Blueprint
+
 
 class HttpProtocol(ABC):
+    """Abstract Class for Http Protocol"""
     @abstractmethod
     def get_blueprint(self) -> Blueprint:
-        pass
+        """Get Blueprint data for Http protocol"""

@@ -1,20 +1,24 @@
+"""Abstract Module for Update Process"""
+
 # Develop: Vmgabriel
 
 # Libraries
-from typing import TypeVar, Generic, Any
+from typing import TypeVar, Generic
 from abc import ABC, abstractmethod
 
-T = TypeVar('T')
+_T = TypeVar('T')
 
-class Update(ABC, Generic[T]):
-    @abstractmethod
-    def execute(self, id: int, data: T) -> T:
-        pass
 
+class Update(ABC, Generic[_T]):
+    """Update Generic Abstract"""
     @abstractmethod
-    def to_entity(self, data: T) -> str:
-        pass
+    def execute(self, id: int, data: _T) -> _T:
+        """Execute Process update into database"""
 
     @abstractmethod
-    def to_query(self, data: T, id: int) -> str:
-        pass
+    def to_entity(self, data: _T) -> str:
+        """Convert update to entity valid into database"""
+
+    @abstractmethod
+    def to_query(self, data: _T, id: int) -> str:
+        """Convert to Query"""

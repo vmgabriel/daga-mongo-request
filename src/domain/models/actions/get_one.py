@@ -1,16 +1,19 @@
+"""Abstract Module for Get One Data"""
 # Develop: Vmgabriel
 
 # Libraries
 from typing import TypeVar, Generic
 from abc import ABC, abstractmethod
 
-T = TypeVar('T')
+_T = TypeVar('T')
 
-class Get_One(ABC, Generic[T]):
+
+class Get_One(ABC, Generic[_T]):
+    """Abstract Class for Get One Data into Database"""
     @abstractmethod
-    def execute(self, id: int) -> T:
-        pass
+    def execute(self, id: int) -> _T:
+        """Execute Process of get one into database"""
 
     @abstractmethod
     def to_query(self, data: int) -> str:
-        pass
+        """Convert to Query Data"""

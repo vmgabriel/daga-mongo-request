@@ -5,11 +5,15 @@
 
 
 # Libraries
-from typing import List, TypeVar, Generic, Any
-from sensor_data.domain.sensor_data import SensorData
+from typing import List
+from src.sensor_data.domain.sensor_data import SensorData
 
 list_data = {}
-filter_last_data_reader = lambda y: lambda x: x[1].idReader == y
+
+
+def filter_last_data_reader(_y):
+    """Define Filter Last Data Reader"""
+    return lambda x: x[1].idReader == _y
 
 
 def is_created_controller(id_controller: str) -> bool:
@@ -18,7 +22,8 @@ def is_created_controller(id_controller: str) -> bool:
 
 
 def is_created_reader(id_controller: str, id_reader: str) -> bool:
-    """Return True if SensorData with idController and IdReader is Already Created."""
+    """Return True if SensorData with idController and IdReader is
+    Already Created."""
     filtered = list(
         filter(
             filter_last_data_reader(id_reader),
@@ -46,9 +51,9 @@ def insert_reader(name_controller: str, data: SensorData) -> None:
 
 def verify_data(data: SensorData) -> None:
     """With data of SensorData select as last data and put"""
-    if not (is_created_controller(data.idController)):
+    if not is_created_controller(data.idController):
         list_data[data.idController] = []
-    if (is_created_reader(data.idController, data.idReader)):
+    if is_created_reader(data.idController, data.idReader):
         find_and_delete_reader(data.idController, data.idReader)
     insert_reader(data.idController, data)
 
