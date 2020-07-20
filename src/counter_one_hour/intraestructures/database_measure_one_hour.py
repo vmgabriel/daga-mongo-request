@@ -16,6 +16,7 @@ from src.domain.models.db.entity_conversor import Conversor_Type
 
 # Interfaces of Actions
 from src.domain.models.actions.create import Create
+from src.domain.models.actions.average import Average
 
 # Connections
 from src.utils.db.mongo.mongo import Mongo_Connection
@@ -28,6 +29,8 @@ from src.counter_one_hour.application.validate import MeasureOneHourValidate
 # Mongo
 from src.counter_one_hour.intraestructures.mongo.actions.create \
     import CreateMeasureOneHour
+from src.counter_one_hour.intraestructures.mongo.actions.average \
+    import AverageMongoMeasureOneHour
 
 
 class DatabaseMeasureOneHour(Database_Interface[MeasureOneHour]):
@@ -40,12 +43,12 @@ class DatabaseMeasureOneHour(Database_Interface[MeasureOneHour]):
         self.validation = MeasureOneHourValidate()
 
         self.create_meassure: Create = None
+        self.average_measure: Average = None
 
         self.builder(type_data, other_data)
 
     def put_odd_table(self, data: str) -> None:
         """Change odd_table"""
-        print('data - ', data)
         self.odd_table = data
 
     def create(self, data: MeasureOneHour) -> MeasureOneHour:
@@ -56,6 +59,11 @@ class DatabaseMeasureOneHour(Database_Interface[MeasureOneHour]):
     def create_massive(self, data: List[MeasureOneHour]) -> List[str]:
         """Create Massive Method"""
         return [str(x) for x in data]
+
+    def average_reader_one_hour(self, data) -> MeasureOneHour:
+        """Average Reader Data"""
+        self.average_measure.put_name_table(self.odd_table)
+        return self.average_measure.execute(data)
 
     def builder(self, definition: str, other_definition: str = '') -> None:
         """Builder for Select Database"""
@@ -70,6 +78,10 @@ class DatabaseMeasureOneHour(Database_Interface[MeasureOneHour]):
                 self.name_table,
                 self.connection,
                 self.validation
+            )
+            self.average_measure = AverageMongoMeasureOneHour(
+                self.name_table,
+                self.connection
             )
 
         if definition == 'schema':
