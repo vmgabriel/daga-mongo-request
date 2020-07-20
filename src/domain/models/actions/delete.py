@@ -12,9 +12,19 @@ _T = TypeVar('T')
 class Delete(ABC, Generic[_T]):
     """Abstract Class for Delete Process into Database"""
     @abstractmethod
-    def execute(self, data: _T) -> _T:
+    def execute(
+            self,
+            idReader: int,
+            idController: int,
+            typeMeasure: str
+    ) -> bool:
         """Define Execute process into database"""
 
     @abstractmethod
-    def to_query(self, data: _T, id: int) -> str:
+    def to_query(
+            self,
+            idReader: int,
+            idController: int,
+            typeMeasure: str
+    ) -> str:
         """Convert to query a order"""

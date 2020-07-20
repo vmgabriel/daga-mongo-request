@@ -12,12 +12,12 @@ from src.counter_five.domain.measure_five import MeasureFive
 from src.domain.models.database_interface import Database_Interface
 from src.domain.models.db_connection import Db_Connection
 from src.domain.models.db.entity_conversor import Conversor_Type
-from src.domain.models.filter_interface import Attribute_Filter, Filter_Interface
 
 # Interfaces of Actions
 from src.domain.models.actions.create import Create
 from src.domain.models.actions.create_massive import CreateMassive
 from src.domain.models.actions.average import Average
+from src.domain.models.actions.delete import Delete
 
 # Connections
 from src.utils.db.mongo.mongo import Mongo_Connection
@@ -30,12 +30,18 @@ from src.counter_five.applications.validate import MeasureFiveValidate
 
 # Actions
 # Sqlite
-from src.counter_five.infraestructures.sqlite.actions.create import Create_Measure as createSQLite
-from src.counter_five.infraestructures.sqlite.actions.average import AverageSQLite
+from src.counter_five.infraestructures.sqlite.actions.create \
+    import Create_Measure as createSQLite
+from src.counter_five.infraestructures.sqlite.actions.average \
+    import AverageSQLite
+from src.counter_five.infraestructures.sqlite.actions.delete \
+    import DeleteSQLiteMeasure
 
 # Mongo
-from src.counter_five.infraestructures.mongo.actions.create import Create_Measure as CreateMongo
-from src.counter_five.infraestructures.mongo.actions.create_massive import CreateMassive_Measure as CreateMassiveMongo
+from src.counter_five.infraestructures.mongo.actions.create \
+    import Create_Measure as CreateMongo
+from src.counter_five.infraestructures.mongo.actions.create_massive \
+    import CreateMassive_Measure as CreateMassiveMongo
 
 
 class Database_Measure_Five(Database_Interface[MeasureFive]):
@@ -53,6 +59,7 @@ class Database_Measure_Five(Database_Interface[MeasureFive]):
         self.create_measure_secundary: Create = None
         self.create_massive_measure: CreateMassive = None
         self.average: Average = None
+        self.delete: Delete = None
 
         self.builder(type_data, fastly_data)
 
@@ -76,11 +83,17 @@ class Database_Measure_Five(Database_Interface[MeasureFive]):
             print('output massive - ', output)
         return self.create_massive_measure.execute(data)
 
-    def average(self, **data) -> str:
+    def average_content(self, **data) -> MeasureFive:
         """Average data based"""
-        output = self.average.execute(**data)
-        print('data average - ', output)
-        return ''
+        return self.average.execute(**data)
+
+    def delete_with_content(
+            self,
+            idReader: int,
+            idController: int,
+            typeMeasure: str
+    ) -> bool:
+        return self.delete.execute(idReader, idController, typeMeasure)
 
     def builder(self, definition: str, other_definition: str = '') -> None:
         """Builder for Select Database"""
@@ -114,6 +127,10 @@ class Database_Measure_Five(Database_Interface[MeasureFive]):
                 self.other_conversor
             )
             self.average = AverageSQLite(
+                self.name_table,
+                self.other_connection
+            )
+            self.delete = DeleteSQLiteMeasure(
                 self.name_table,
                 self.other_connection
             )

@@ -58,7 +58,6 @@ class MeasureFiveValidate(Validate_Interface[MeasureFive]):
     @staticmethod
     def validate_object_update(data: Any) -> (str, MeasureFive):
         """Validate Object Update"""
-        # pylint: disable=invalid-name
         datas = []
         datas.append(data['_id'] if ('_id' in data) else None)
         datas.append(

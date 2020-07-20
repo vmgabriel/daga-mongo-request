@@ -38,6 +38,28 @@ class MeasureOneHour:
     @staticmethod
     def define_type(type_val: str) -> str:
         """Define Type of each of name of the attributes of the class"""
+        data = ''
         if type_val in ('min', 'max', 'gr1', 'gr2', 'gr3', 'gr4'):
-            return 'float'
+            data = 'float'
+        if type_val in ('took_time', 'created_at', 'updated_at', 'deleted_at'):
+            data = 'datetime'
+        if type_val in ('counter', 'id_reader', 'id_controller'):
+            data = 'int'
+        if type_val in ('name_reader', 'name_controller'):
+            data = 'str'
+        return data
+
+    @staticmethod
+    def id_name() -> str:
+        """Return the name of id table(scheme/struct)"""
+        return '_id'
+
+    @staticmethod
+    def validation_name() -> str:
+        """Return the name of attribute of state"""
         return ''
+
+    @staticmethod
+    def delete_date_name() -> str:
+        """Return the name of attribute of date Delete"""
+        return 'deletedAt'

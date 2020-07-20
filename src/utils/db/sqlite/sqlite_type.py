@@ -48,18 +48,18 @@ class SQLiteType(Conversor_Type):
 
     def to_entity(self, type_str: str, data: Any) -> str:
         """Take type and convert data"""
-        if (type_str == 'str'):
+        if type_str == 'str':
             return self.str_to(data)
-        if (type_str == 'float'):
+        if type_str == 'float':
             return self.float_to(data)
-        if (type_str == 'int'):
+        if type_str == 'int':
             return self.int_to(data)
-        if (type_str == 'datetime'):
+        if type_str == 'datetime':
             return self.datetime_to(data)
-        if (type_str == 'bool'):
+        if type_str == 'bool':
             return self.bool_to(data)
-        if (type_str == 'list'):
+        if type_str == 'list':
             return self.list_to(data)
-        if (type_str == 'keyword'):
+        if type_str == 'keyword':
             return self.keyword_to(data)
         return ''
