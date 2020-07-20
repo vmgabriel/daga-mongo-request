@@ -1,9 +1,18 @@
 # Develop Vmgabriel
 
+
+"""Module that Define the configuration of server"""
+
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
+
+
+def get_base_path():
+    """Define the path base"""
+    return str(Path(__file__).resolve().parent.parent.parent)
+
 
 configuration = {
     'host': '0.0.0.0',
@@ -29,5 +38,9 @@ configuration = {
     'host_database': os.getenv('HOST_DATABASE'),
     'port_database': '27017',
 
-    'persistency': 'mongo'
+    'persistency': 'mongo',
+
+    'persistency_secundary': 'sqlite',
+    'path_migration': get_base_path() + '/migrations/',
+    'file_database': 'process.db'
 }

@@ -1,19 +1,23 @@
+"""Abstract Module for Gell All Data"""
+
 # Develop: Vmgabriel
 
 # Libraries
-from typing import TypeVar, Generic, Any, List
+from typing import TypeVar, Generic, List
 from abc import ABC, abstractmethod
 
 # Interfaces
-from domain.models.filter_interface import Filter_Interface
+from src.domain.models.filter_interface import Filter_Interface
 
-T = TypeVar('T')
+_T = TypeVar('T')
 
-class Get_All(ABC, Generic[T]):
+
+class Get_All(ABC, Generic[_T]):
+    """Get All Data Process"""
     @abstractmethod
     def execute(
             self,
             limit: int,
             offset: int
-    ) -> List[T]:
-        pass
+    ) -> List[_T]:
+        """Execute Process for to get Data"""

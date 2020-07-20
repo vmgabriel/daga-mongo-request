@@ -1,21 +1,24 @@
+"""Module for Create Massive"""
+
 # Develop: Vmgabriel
 
 # Libraries
 from typing import TypeVar, Generic, List, Any
 from abc import ABC, abstractmethod
 
-T = TypeVar('T')
+_T = TypeVar('T')
 
-class CreateMassive(ABC, Generic[T]):
-    @abstractmethod
-    def execute(self, data: List[T]) -> (List[str], int):
-        pass
 
+class CreateMassive(ABC, Generic[_T]):
+    """Abstract Class for Create Massive"""
     @abstractmethod
-    def to_entity(self, data: T) -> Any:
-        pass
+    def execute(self, data: List[_T]) -> (List[str], int):
+        """Execute the order into database"""
 
     @abstractmethod
-    def to_many_entities(self, data: List[T]) -> Any:
-        pass
+    def to_entity(self, data: _T) -> Any:
+        """Convert to entity a data"""
 
+    @abstractmethod
+    def to_many_entities(self, data: List[_T]) -> Any:
+        """Converto to entities varioous objects"""

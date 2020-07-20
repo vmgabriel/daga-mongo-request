@@ -1,3 +1,5 @@
+"""Abstract Filter Module"""
+
 # Develop: Vmgabriel
 
 # Libraries
@@ -5,11 +7,13 @@ from typing import TypeVar, Generic, Any, List
 from abc import ABC, abstractmethod
 
 # Interfaces
-from domain.models.filter_interface import Filter_Interface, Attribute_Filter, Column_Filter
+from src.domain.models.filter_interface import Filter_Interface, Attribute_Filter, Column_Filter
 
-T = TypeVar('T')
+_T = TypeVar('T')
 
-class Filter(ABC, Generic[T]):
+
+class Filter(ABC, Generic[_T]):
+    """Abstract Filter Class"""
     @abstractmethod
     def execute(
             self,
@@ -18,16 +22,16 @@ class Filter(ABC, Generic[T]):
             joins: Any,
             limit: int,
             offset: int
-    ) -> (List[T], str):
-        pass
+    ) -> (List[_T], str):
+        """Module for execute data filter and get this data of database"""
 
     @abstractmethod
     def convert_column(self, column_filter: Column_Filter) -> str:
-        pass
+        """Convert Data Column into Column"""
 
     @abstractmethod
     def convert_filter(self, filters: Filter_Interface) -> str:
-        pass
+        """Convert Filter Data into Filter Valid into Database"""
 
     @abstractmethod
     def convert_attributes(
@@ -35,12 +39,12 @@ class Filter(ABC, Generic[T]):
             attributes: List[Attribute_Filter],
             is_count: bool = False
     ) -> str:
-        pass
+        """Convert attributes for Database"""
 
     @abstractmethod
     def convert_joins(self, joins: Any) -> str:
-        pass
+        """Convert Joins into a based in a based to database"""
 
     @abstractmethod
     def definitor(self) -> str:
-        pass
+        """Definitor Process query"""

@@ -1,29 +1,29 @@
 # Develop: vmgabriel
 
-# Libraries
-import inject
-from typing import List, TypeVar, Generic, Any, Tuple
+"""Module for Create Measure"""
 
-from counter_five.domain.measure_five import MeasureFive
+# Libraries
+from src.counter_five.domain.measure_five import MeasureFive
 
 # Interfaces
-from domain.models.db_connection import Db_Connection
-from domain.models.db.entity_conversor import Conversor_Type
+from src.domain.models.db_connection import Db_Connection
 
-from domain.models.validation_interface import Validate_Interface
+from src.domain.models.validation_interface import Validate_Interface
 # Super Class
-from domain.models.actions.create import Create
+from src.domain.models.actions.create import Create
 
-# Environment
-from config.server import configuration as conf
 
 class Create_Measure(Create[MeasureFive]):
     """Create Action Measure"""
-    def __init__(self, name_table: str, database: Db_Connection, validation: Validate_Interface):
+    def __init__(
+            self,
+            name_table: str,
+            database: Db_Connection,
+            validation: Validate_Interface
+    ):
         self.name_data = self.name_table = name_table
         self.__database = database
         self.measure_validate = validation
-
 
     def execute(self, data: MeasureFive) -> MeasureFive:
         """Execute query"""
@@ -36,17 +36,14 @@ class Create_Measure(Create[MeasureFive]):
         (_, measure_new) = self.measure_validate.validate_object(data_entity)
         return measure_new
 
-
     def to_entity(self, data: MeasureFive) -> (str, str):
         """Convert to entity data based into database"""
-        return ('', '')
-
+        return ('', str(data))
 
     def to_query(self, data: MeasureFive) -> str:
         """Get Query into execute procedure"""
-        return ''
+        return str(data)
 
     def put_name_table(self, name_table: str) -> None:
         """Set Name table"""
         self.name_table = self.name_data + name_table
-

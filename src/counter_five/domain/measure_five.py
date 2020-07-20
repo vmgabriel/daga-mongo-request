@@ -1,9 +1,10 @@
-# Develi
+"""Measure Five"""
 
+# Libraries
 from dataclasses import dataclass
 from datetime import datetime
-
 from dataclasses_json import dataclass_json, LetterCase
+
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
@@ -27,56 +28,35 @@ class MeasureFive:
     deletedAt: datetime
 
     def __str__(self):
-        """Convert to str - get data attributes"""
-        x  = 'tookTime,min,max,counter,gr1,gr2,gr3,gr4,idReader,nameReader'
-        x += ',idController,nameController,createdAt,updatedAt'
-        return x
+        """Convert to str get data attributes"""
+        _x = 'min,max,counter,gr1,gr2,gr3,gr4,idReader,nameReader,'
+        _x += 'idController,nameController,typeMeasure'
+        return _x
 
-
-    def define_type(self, type_val: str) -> str:
+    @staticmethod
+    def define_type(type_val: str) -> str:
         """Define Type of each of name of attribute"""
-        if (
-                type_val == 'min' or
-                type_val == 'max' or
-                type_val == 'gr1' or
-                type_val == 'gr2' or
-                type_val == 'gr3' or
-                type_val == 'gr4'
-        ):
+        if type_val in ('min', 'max', 'gr1', 'gr2', 'gr3', 'gr4'):
             return 'float'
-        if (
-                type_val == 'createdAt' or
-                type_val == 'updatedAt' or
-                type_val == 'deletedAt' or
-                type_val == 'tookTime'
-        ):
+        if type_val in ('createdAt', 'updatedAt', 'deletedAt', 'tookTime'):
             return 'datetime'
-        if (
-                type_val == '_id' or
-                type_val == 'idReader' or
-                type_val == 'idController' or
-                type_val == 'counter'
-        ):
+        if type_val in ('_id', 'idReader', 'idController', 'counter'):
             return 'int'
-        if (
-                type_val == 'nameReader' or
-                type_val == 'nameController'
-        ):
+        if type_val in ('nameReader', 'nameController', 'typeMeasure'):
             return 'str'
         return ''
 
-
-    def id_name(self) -> str:
+    @staticmethod
+    def id_name() -> str:
         """Return the name of id table(scheme/struct)"""
-        return '_id'
+        return 'id'
 
-
-    def validation_name(self) -> str:
+    @staticmethod
+    def validation_name() -> str:
         """Return the name of attribute of state"""
         return ''
 
-
-    def delete_date_name(self) -> str:
+    @staticmethod
+    def delete_date_name() -> str:
         """Return the name of attribute of date Delete"""
         return 'deletedAt'
-

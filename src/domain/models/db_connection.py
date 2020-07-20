@@ -1,21 +1,29 @@
+"""Module for DB_Connection"""
+
 # Develop vmgabriel
 
 from abc import ABC, abstractmethod
-from typing import List, TypeVar, Generic, Any, Tuple
+from typing import Any
 
-class Db_Connection:
+
+class Db_Connection(ABC):
+    """Db Connector for use Into Databse"""
     @abstractmethod
     def get_connection(self) -> Any:
-        pass
+        """Get Connection Database"""
 
     @abstractmethod
     def get_cursor(self) -> Any:
-        pass
+        """Get Cursor of Database a valid pool of connection"""
+
+    @abstractmethod
+    def migrations(self) -> None:
+        """Migrate into Definitions to database"""
 
     @abstractmethod
     def disconnect(self) -> None:
-        pass
+        """Disconnect the database"""
 
     @abstractmethod
     def connector(self) -> str:
-        pass
+        """Generate a Uri for connector"""

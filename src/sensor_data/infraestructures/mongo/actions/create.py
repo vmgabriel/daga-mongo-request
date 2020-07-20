@@ -1,31 +1,29 @@
+"""Create Sensor Data"""
+
 # Develop: vmgabriel
 
 # Libraries
-import inject
-from typing import List, TypeVar, Generic, Any, Tuple
 
 # Interfaces
-from sensor_data.domain.sensor_data import SensorData
-from domain.models.db_connection import Db_Connection
-from domain.models.db.entity_conversor import Conversor_Type
+from src.sensor_data.domain.sensor_data import SensorData
+from src.domain.models.db_connection import Db_Connection
 
 # Validator for conver to Object
-from sensor_data.applications.validate import SensorDataValidate
+from src.sensor_data.applications.validate import SensorDataValidate
 
 # Super Class
-from domain.models.actions.create import Create
+from src.domain.models.actions.create import Create
 
-# Environment
-from config.server import configuration as conf
 
 class Create_SensorData(Create[SensorData]):
+    """Create Sensor Data Action Mongo"""
     def __init__(self, name_table: str, database: Db_Connection):
         self.name_table = name_table
         self.__database = database
         self.sensor_validate = SensorDataValidate()
 
-
     def execute(self, data: SensorData) -> SensorData:
+        """Execute Create In Mongo"""
         conn = self.__database.get_cursor()
         data_entity = data.to_dict()
         del data_entity["_id"]
@@ -36,8 +34,9 @@ class Create_SensorData(Create[SensorData]):
         return sensor_new
 
     def to_entity(self, data: SensorData) -> (str, str):
-        return ('', '')
+        """Convert to Entity"""
+        return (str(data), '')
 
     def to_query(self, data: SensorData) -> str:
-        return ''
-
+        """Convert to Query"""
+        return str(data)
